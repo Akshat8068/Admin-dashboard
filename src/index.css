@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #ff6900;
+    --color-secondary: #f97316;
+    --color-hover: #fff7ed;
+}
+
+@layer utilities {
+    .bg-primary {
+        background-color: var(--color-primary);
+    }
+
+    .bg-secondary {
+        background-color: var(--color-secondary);
+    }
+
+    .bg-hover {
+        background-color: var(--color-hover);
+    }
+
+    .text-primary {
+        color: var(--color-primary);
+    }
+
+    .border-primary {
+        border-color: var(--color-primary);
+    }
+
+    .hover\:bg-hover:hover {
+        background-color: var(--color-hover);
+    }
+}
+
+@keyframes accordion-down {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: var(--radix-accordion-content-height);
+    }
+}
+
+@keyframes accordion-up {
+    from {
+        height: var(--radix-accordion-content-height);
+    }
+
+    to {
+        height: 0;
+    }
+}
+
+@utility animate-accordion-down {
+    animation: accordion-down 0.2s ease-out;
+}
+
+@utility animate-accordion-up {
+    animation: accordion-up 0.2s ease-out;
+}
