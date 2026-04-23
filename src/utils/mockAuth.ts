@@ -7,7 +7,7 @@ const mockUsers: User[] = [
         id: '1',
         name: 'Admin User',
         email: 'admin@example.com',
-        role: 'admin',
+        isAdmin: true,
         isActive: true,
         createdAt: '2024-01-01T00:00:00Z',
         updatedAt: '2024-01-01T00:00:00Z',
@@ -16,7 +16,7 @@ const mockUsers: User[] = [
         id: '2',
         name: 'Regular User',
         email: 'user@example.com',
-        role: 'user',
+        isAdmin: false,
         isActive: true,
         createdAt: '2024-01-01T00:00:00Z',
         updatedAt: '2024-01-01T00:00:00Z',
@@ -52,7 +52,34 @@ export const mockAuthService = {
         if (!user.isActive) {
             throw { response: { status: 403, data: { success: false, message: 'Account is deactivated', data: null } } };
         }
+        console.log("Login API hit")
         return { success: true, message: 'Login successful', data: { user, tokens: generateTokens(user) } };
+    },
+    async checkUsername(username: string) {
+        await delay(500);
+
+        const exists = mockUsers.some(
+            (user) => user.name.toLowerCase() === username.toLowerCase()
+        );
+
+        if (exists) {
+            throw {
+                response: {
+                    status: 400,
+                    data: {
+                        success: false,
+                        message: 'Username already taken',
+                        data: null
+                    }
+                }
+            };
+        }
+
+        return {
+            success: true,
+            message: 'Username available',
+            data: null
+        };
     },
 
     async register(userData: RegisterData): Promise<ApiResponse<{ user: User; tokens: AuthTokens }>> {
@@ -65,11 +92,12 @@ export const mockAuthService = {
             id: (mockUsers.length + 1).toString(),
             name: userData.name,
             email: userData.email,
-            role: 'user',
+            isAdmin: false,
             isActive: true,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
         };
+        console.log(newUser)
         mockUsers.push(newUser);
         mockPasswords[userData.email] = userData.password;
         return { success: true, message: 'Registration successful', data: { user: newUser, tokens: generateTokens(newUser) } };
@@ -80,7 +108,7 @@ export const mockAuthService = {
         return { success: true, message: 'Logged out successfully', data: null };
     },
 
-    
+
 
     async getCurrentUser(token: string): Promise<ApiResponse<User>> {
         await delay(300);

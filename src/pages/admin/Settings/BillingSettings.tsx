@@ -1,6 +1,6 @@
 import { CreditCard, Download } from 'lucide-react';
-import { Button } from '@/components/UI/button';
-import { Badge } from '@/components/UI/badge';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 const billingHistory = [
     { date: 'Jan 15, 2024', amount: '$29.00', status: 'Paid' },

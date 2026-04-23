@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { HelpCircle, ChevronDown } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/UI/card';
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/UI/Accordion';
-import { Input } from '@/components/UI/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/Accordion';
+import { Input } from '@/components/ui/input';
 import {
     DropdownMenu,
     DropdownMenuTrigger,
     DropdownMenuContent,
     DropdownMenuItem,
-} from '@/components/UI/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import { FormBuilder, type FieldConfig } from '@/components/common/FormBuilder';
 import { mockQuestions, helpCategories, type HelpCategory } from '@/utils/mockquestions';
 import { z } from 'zod';

@@ -1,12 +1,11 @@
 import { z } from 'zod';
 import { Package } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/UI/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FormBuilder, type FieldConfig } from '@/components/common/FormBuilder';
 import { FileUpload } from '@/components/common/FileUpload';
-import { Label } from '@/components/UI/label';
+import { Label } from '@/components/ui/label';
 import { useNavigate } from 'react-router-dom';
-import { useAddProductMutation } from '@/store/api/productsApi';
-import type { Product } from '@/types';
+import { useAddDummyProductMutation } from '@/store/api/productApi';
 import { useState } from 'react';
 
 const productSchema = z.object({
@@ -46,18 +45,19 @@ const fields: FieldConfig<ProductFormData>[] = [
 ];
 
 const AddProduct = () => {
-    const [addProduct, { isLoading }] = useAddProductMutation();
+    const [addProduct] = useAddDummyProductMutation();
     const [images, setImages] = useState<File[]>([]);
     const navigate = useNavigate();
 
     const handleSubmit = async (data: ProductFormData) => {
         try {
             await addProduct({
-                ...data,
+                title: data.name,
+                description: data.description,
+                category: data.category,
                 price: Number(data.price),
                 stock: Number(data.stock),
-                status: data.status as Product['status'],
-                images: images.map(file => URL.createObjectURL(file)),
+                thumbnail: images.length > 0 ? URL.createObjectURL(images[0]) : '',
             }).unwrap();
             setTimeout(() => navigate('/products'), 0);
         } catch (err) {
@@ -85,7 +85,7 @@ const AddProduct = () => {
                         submitText="Save Product"
                         submitClassName="bg-orange-500 hover:bg-orange-600"
                     />
-                   
+
                 </CardContent>
             </Card>
         </div>

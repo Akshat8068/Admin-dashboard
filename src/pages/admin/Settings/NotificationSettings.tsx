@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Mail, Bell } from 'lucide-react';
-import { Switch } from '@/components/UI/switch';
+import { Switch } from '@/components/ui/switch';
 
 interface NotifItem {
     id: string;

@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
 import { Package, ShoppingBag, ShoppingCart, Copy, Pencil, Trash2, MoreHorizontal } from 'lucide-react';
 import type { ColumnDef } from '@tanstack/react-table';
-import { Card, CardContent } from '@/components/UI/card';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/UI/dropdown-menu';
+import { Card, CardContent } from '@/components/ui/card';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { DataTable } from '@/components/common/DataTable';
 import { ReportStatCard } from './ReportStatCard';
 import { mockProductReportData } from '@/utils/mockReport';

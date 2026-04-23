@@ -10,7 +10,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from '@/components/UI/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import { useDispatch } from 'react-redux';
 import { logout } from '@/store/slices/authSlice';
 
@@ -128,7 +128,7 @@ const DashBoardLayout = () => {
                                     </div>
                                     <div className="hidden sm:block text-left">
                                         <p className="text-sm font-medium text-gray-900 leading-none">{user?.name ?? 'Admin'}</p>
-                                        <p className="text-xs text-gray-500 mt-0.5">Admin</p>
+                                        <p className="text-xs text-gray-500 mt-0.5">{user?.isAdmin ? 'Admin' : 'User'}</p>
                                     </div>
                                     <ChevronDown className="h-4 w-4 text-gray-400" />
                                 </button>

@@ -1,6 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useCurrentUser } from '@/hooks/redux';
-import { UserRole } from '@/types';
 
 export function AdminRoute() {
     const user = useCurrentUser();
@@ -9,7 +8,7 @@ export function AdminRoute() {
         return <Navigate to="/login" replace />;
     }
 
-    if (user.role !== UserRole.ADMIN) {
+    if (!Boolean(user.isAdmin)) {
         return <Navigate to="/" replace />;
     }
 

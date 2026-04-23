@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Plus, Package } from 'lucide-react';
-import { Card, CardContent } from '@/components/UI/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { useGetProductsQuery } from '@/store/api/productsApi';
 import type { Product } from '@/types';
 
@@ -45,7 +45,7 @@ const Products = () => {
                 <div>
                     <h2 className="text-lg font-bold text-gray-900">All Products</h2>
                 </div>
-               
+
             </div>
 
             {/* Filters */}

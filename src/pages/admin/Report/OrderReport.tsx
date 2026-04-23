@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ShoppingBag, ShoppingCart, Package, Users } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/UI/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ReportStatCard } from './ReportStatCard';
 import { orderReportData } from '@/utils/mockReport';
 

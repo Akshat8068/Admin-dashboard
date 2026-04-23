@@ -38,6 +38,7 @@ const navigation: NavItem[] = [
         children: [
             { name: 'List Products', href: '/products', icon: ListOrdered },
             { name: 'Add Product', href: '/add', icon: PlusSquare },
+            { name: 'Dummy Products', href: '/dummy-products', icon: Package },
         ],
     },
     { name: 'Customers', href: '/customers', icon: Users },

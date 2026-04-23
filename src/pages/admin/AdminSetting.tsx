@@ -10,15 +10,15 @@ import {
   Mail
 } from 'lucide-react';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/UI/card';
-import { Button } from '@/components/UI/button';
-import { Input } from '@/components/UI/input';
-import { Label } from '@/components/UI/label';
-import { Switch } from '@/components/UI/switch';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/UI/tabs';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/UI/select';
-import { Textarea } from '@/components/UI/textarea';
-import { Separator } from '@/components/UI/separator';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Separator } from '@/components/ui/separator';
 
 export default function SettingsPage() {
   return (

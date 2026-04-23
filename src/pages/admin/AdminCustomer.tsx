@@ -7,7 +7,10 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
-} from '@/components/UI/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
+import { useGetUsersQuery } from '@/store/api/customerApi';
+import { useAppSelector } from '@/hooks/redux';
+import { NetworkErrorBanner } from '@/components/common/ErrorBanner';
 
 type CustomerStatus = 'active' | 'inactive';
 
@@ -20,24 +23,31 @@ interface Customer {
     location: string;
 }
 
-const mockCustomers: Customer[] = [
-    { id: 'USR-001', name: 'Aarav Sharma', email: 'aarav@example.com', status: 'active', joinDate: '2024-01-15', location: 'Mumbai, IN' },
-    { id: 'USR-002', name: 'Priya Mehta', email: 'priya@example.com', status: 'active', joinDate: '2024-02-20', location: 'Delhi, IN' },
-    { id: 'USR-003', name: 'Rohan Verma', email: 'rohan@example.com', status: 'inactive', joinDate: '2024-03-05', location: 'Bangalore, IN' },
-    { id: 'USR-004', name: 'Sneha Patel', email: 'sneha@example.com', status: 'active', joinDate: '2024-03-18', location: 'Ahmedabad, IN' },
-    { id: 'USR-005', name: 'Karan Singh', email: 'karan@example.com', status: 'inactive', joinDate: '2024-04-01', location: 'Jaipur, IN' },
-    { id: 'USR-006', name: 'Ananya Gupta', email: 'ananya@example.com', status: 'active', joinDate: '2024-04-10', location: 'Pune, IN' },
-    { id: 'USR-007', name: 'Vikram Nair', email: 'vikram@example.com', status: 'active', joinDate: '2024-05-02', location: 'Chennai, IN' },
-    { id: 'USR-008', name: 'Meera Joshi', email: 'meera@example.com', status: 'inactive', joinDate: '2024-05-14', location: 'Hyderabad, IN' },
-    { id: 'USR-009', name: 'Arjun Reddy', email: 'arjun@example.com', status: 'active', joinDate: '2024-06-01', location: 'Kolkata, IN' },
-    { id: 'USR-010', name: 'Divya Kapoor', email: 'divya@example.com', status: 'active', joinDate: '2024-06-20', location: 'Surat, IN' },
-    { id: 'USR-011', name: 'Nikhil Bose', email: 'nikhil@example.com', status: 'inactive', joinDate: '2024-07-08', location: 'Lucknow, IN' },
-    { id: 'USR-012', name: 'Pooja Iyer', email: 'pooja@example.com', status: 'active', joinDate: '2024-07-22', location: 'Nagpur, IN' },
-];
-
 const AdminCustomer = () => {
-    const [customers, setCustomers] = useState<Customer[]>(mockCustomers);
+    const [deletedIds, setDeletedIds] = useState<string[]>([]);
     const [copiedId, setCopiedId] = useState<string | null>(null);
+    const [pageIndex, setPageIndex] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
+
+    const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
+
+    const { data, isLoading, isError, refetch } = useGetUsersQuery(
+        { limit: pageSize, skip: pageIndex * pageSize },
+        { skip: !isAuthenticated }
+    );
+
+    const allCustomers: Customer[] = (data?.users ?? []).map((user: any) => ({
+        id: String(user.id),
+        name: `${user.firstName} ${user.lastName}`,
+        email: user.email,
+        status: (user.role === 'admin' ? 'active' : 'inactive') as CustomerStatus,
+        joinDate: user.birthDate,
+        location: `${user.address.city}, ${user.address.country}`,
+    }));
+
+    const customers = allCustomers.filter((c) => !deletedIds.includes(c.id));
+
+    const pageCount = data?.total ? Math.ceil(data.total / pageSize) : 0;
 
     const handleCopyId = (id: string) => {
         navigator.clipboard.writeText(id);
@@ -46,7 +56,7 @@ const AdminCustomer = () => {
     };
 
     const handleDelete = (id: string) => {
-        setCustomers((prev) => prev.filter((c) => c.id !== id));
+        setDeletedIds((prev) => [...prev, id]);
     };
 
     const columns: ColumnDef<Customer>[] = [
@@ -76,10 +86,10 @@ const AdminCustomer = () => {
                 const isActive = row.original.status === 'active';
                 return (
                     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${isActive
-                            ? 'bg-orange-50 text-[#ff6900]'
-                            : 'bg-gray-100 text-gray-500'
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-red-100 text-red-500'
                         }`}>
-                        <span className={`h-1.5 w-1.5 rounded-full ${isActive ? 'bg-[#ff6900]' : 'bg-gray-400'}`} />
+                        <span className={`h-1.5 w-1.5 rounded-full ${isActive ? 'bg-green-400' : 'bg-red-400'}`} />
                         {isActive ? 'Active' : 'Inactive'}
                     </span>
                 );
@@ -152,26 +162,39 @@ const AdminCustomer = () => {
                     <h1 className="text-lg font-semibold text-gray-800">Customers</h1>
                     <p className="text-xs text-gray-400">Manage your customer base</p>
                 </div>
-                <div className="ml-auto flex items-center gap-3">
-                    <span className="text-xs bg-orange-50 text-[#ff6900] px-3 py-1.5 rounded-full font-medium">
-                        {activeCount} Active
-                    </span>
-                    <span className="text-xs bg-gray-100 text-gray-500 px-3 py-1.5 rounded-full font-medium">
-                        {inactiveCount} Inactive
-                    </span>
-                </div>
+                
             </div>
 
             {/* Table */}
             <div className="bg-white rounded-xl border border-gray-100 p-4">
-                <DataTable
-                    data={customers}
-                    columns={columns}
-                    searchPlaceholder="Search customers..."
-                    enableSelection={false}
-                    enableExport={false}
-                    pageSize={8}
-                />
+                {!isAuthenticated ? (
+                    <p className="text-sm text-orange-400 text-center py-10">
+                        Please login to view customers. (skip: true — no API call made)
+                    </p>
+                ) : isLoading ? (
+                    <p className="text-sm text-gray-400 text-center py-10">Loading customers...</p>
+                ) : isError ? (
+                    <NetworkErrorBanner onRetry={refetch} />
+                ) : (
+                    <DataTable
+                        data={customers}
+                        columns={columns}
+                        searchPlaceholder="Search customers..."
+                        enableSelection={false}
+                        enableExport={false}
+                        pageSize={pageSize}
+                        manualPageIndex={pageIndex}
+                        manualPageCount={pageCount}
+                        onPaginationChange={(newPageIndex, newPageSize) => {
+                            if (newPageSize !== pageSize) {
+                                setPageSize(newPageSize);
+                                setPageIndex(0);
+                            } else {
+                                setPageIndex(newPageIndex);
+                            }
+                        }}
+                    />
+                )}
             </div>
         </div>
     );

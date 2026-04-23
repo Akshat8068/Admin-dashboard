@@ -43,8 +43,10 @@ const Login = () => {
         seterror(null)
         try {
             const result = await loginMutation(data).unwrap()
-            dispatch(login({ user: result.data.user, tokens: result.data.tokens }))
-            navigate(result.data.user.role === 'admin' ? '/dashboard' : '/')
+            const user = { ...result.data.user, isAdmin: result.data.user.isAdmin ?? false }
+            dispatch(login({ user, tokens: result.data.tokens }))
+            navigate(user.isAdmin ? '/dashboard' : '/')
+            console.log(result)
         } catch {
             seterror('Invalid email or password')
         }

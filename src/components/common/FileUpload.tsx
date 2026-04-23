@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { Upload, X, Image } from 'lucide-react';
-import { Progress } from '@/components/UI/progress';
+import { Progress } from '@/components/ui/progress';
 import { cn } from '@/utils';
 
 interface FileUploadProps {

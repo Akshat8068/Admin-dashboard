@@ -4,12 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import type { ZodSchema } from 'zod';
 import { Eye, EyeOff, Check, X } from 'lucide-react';
 
-import { Button } from '@/components/UI/button';
-import { Input } from '@/components/UI/input';
-import { Label } from '@/components/UI/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/UI/select';
-import { Switch } from '@/components/UI/switch';
-import { DatePicker } from '@/components/UI/datepicker';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { DatePicker } from '@/components/ui/datepicker';
 import { cn } from '@/utils';
 
 export type FieldType =
@@ -203,7 +203,7 @@ export function FormBuilder<T extends FieldValues>({
     return (
         <form onSubmit={handleSubmit(async (data) => {
             await (onSubmit as any)(data);
-            
+
         })} className={cn('space-y-5', className)}>
             {fields.filter(shouldShowField).map(fieldConfig => (
                 <div key={fieldConfig.name as string} className={cn('space-y-1.5', fieldConfig.className)}>

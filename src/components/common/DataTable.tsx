@@ -29,21 +29,21 @@ import {
     EyeOff,
 } from 'lucide-react';
 
-import { Button } from '@/components/UI/button';
-import { Input } from '@/components/UI/input';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuTrigger,
-} from '@/components/UI/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from '@/components/UI/select';
+} from '@/components/ui/select';
 import { cn } from '@/utils';
 
 interface DataTableProps<TData> {
@@ -59,6 +59,10 @@ interface DataTableProps<TData> {
     enableExport?: boolean;
     enableColumnVisibility?: boolean;
     pageSize?: number;
+    // Server-side pagination (optional — if not passed, frontend pagination is used)
+    manualPageIndex?: number;
+    manualPageCount?: number;
+    onPaginationChange?: (pageIndex: number, pageSize: number) => void;
 }
 
 export function DataTable<TData>({
@@ -74,12 +78,18 @@ export function DataTable<TData>({
     enableExport = false,
     enableColumnVisibility = true,
     pageSize = 10,
+    manualPageIndex,
+    manualPageCount,
+    onPaginationChange,
 }: DataTableProps<TData>) {
+    const isServerSide = manualPageIndex !== undefined && manualPageCount !== undefined && onPaginationChange !== undefined;
+
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
     const [globalFilter, setGlobalFilter] = useState('');
+    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize });
 
     // Add selection column if enabled
     const tableColumns = useMemo(() => {
@@ -137,17 +147,41 @@ export function DataTable<TData>({
         onRowSelectionChange: setRowSelection,
         onGlobalFilterChange: setGlobalFilter,
         globalFilterFn: 'includesString',
-        state: {
-            sorting,
-            columnFilters,
-            columnVisibility,
-            rowSelection,
-            globalFilter,
-        },
+        ...(isServerSide
+            ? {
+                manualPagination: true,
+                pageCount: manualPageCount,
+                onPaginationChange: (updater) => {
+                    const next = typeof updater === 'function'
+                        ? updater({ pageIndex: manualPageIndex!, pageSize: pagination.pageSize })
+                        : updater;
+                    setPagination(next);
+                    onPaginationChange!(next.pageIndex, next.pageSize);
+                },
+                state: {
+                    sorting,
+                    columnFilters,
+                    columnVisibility,
+                    rowSelection,
+                    globalFilter,
+                    pagination: { pageIndex: manualPageIndex!, pageSize: pagination.pageSize },
+                },
+            }
+            : {
+                manualPagination: false,
+                state: {
+                    sorting,
+                    columnFilters,
+                    columnVisibility,
+                    rowSelection,
+                    globalFilter,
+                    pagination,
+                },
+                onPaginationChange: setPagination,
+            }
+        ),
         initialState: {
-            pagination: {
-                pageSize,
-            },
+            pagination: { pageSize },
         },
     });
 

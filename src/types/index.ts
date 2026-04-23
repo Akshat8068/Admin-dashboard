@@ -4,11 +4,15 @@ export interface User {
     name: string;
     firstName?: string;
     lastName?: string;
-    role: UserRole;
+    role?: UserRole;
+    isAdmin: boolean;
+    phone?: string;
+    address?: string;
     avatar?: string;
-    createdAt: string;
-    updatedAt: string;
-    isActive: boolean;
+    credits?: number;
+    createdAt?: string;
+    updatedAt?: string;
+    isActive?: boolean;
 }
 
 export const UserRole = {
@@ -40,6 +44,9 @@ export interface RegisterData {
     password: string;
     name: string;
     confirmPassword: string;
+    phone?: string;
+    address?: string;
+    isAdmin?: boolean;
 }
 export interface Product {
     id: string;

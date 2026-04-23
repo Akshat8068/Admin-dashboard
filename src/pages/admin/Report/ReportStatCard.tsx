@@ -1,5 +1,5 @@
 import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
-import { Card, CardContent } from '@/components/UI/card';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface StatCardProps {
     title: string;

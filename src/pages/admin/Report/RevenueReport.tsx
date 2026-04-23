@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { ShoppingBag, ShoppingCart, Package, ChevronDown } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/UI/card';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/UI/dropdown-menu';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { ReportStatCard } from './ReportStatCard';
 import { revenueData8Days, revenueData30Days, revenueData3Months, revenueDataYear } from '@/utils/mockReport';
 

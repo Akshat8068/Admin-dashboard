@@ -13,13 +13,18 @@ interface AuthState {
 
 const getInitialState = (): AuthState => {
     if (typeof window === 'undefined') {
-        return { user: null, accessToken: null,  isAuthenticated: false, isLoading: false, error: null };
+        return { user: null, accessToken: null, isAuthenticated: false, isLoading: false, error: null };
     }
     const storedToken = localStorage.getItem('accessToken');
     const storedUser = localStorage.getItem('user');
     const isTokenValid = storedToken && !isTokenExpired(storedToken);
+    const parsedUser = storedUser && isTokenValid ? JSON.parse(storedUser) : null;
+    // ensure isAdmin is always a boolean (handles old cached data without isAdmin)
+    if (parsedUser && parsedUser.isAdmin === undefined) {
+        parsedUser.isAdmin = parsedUser.role === 'admin';
+    }
     return {
-        user: storedUser && isTokenValid ? JSON.parse(storedUser) : null,
+        user: parsedUser,
         accessToken: isTokenValid ? storedToken : null,
         isAuthenticated: Boolean(isTokenValid),
         isLoading: false,

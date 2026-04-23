@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card, CardContent } from "@/components/UI/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
     ArrowDownRight,
     ArrowUpRight,
@@ -22,7 +22,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/UI/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 
 interface StatCardProps {
     title: string;
@@ -68,7 +68,7 @@ function StatCard({ title, value, change, positive, icon: Icon, isSelected, onCl
                             ) : (
                                 <ArrowDownRight className="h-3 w-3 text-red-500" />
                             )}
-                            <span className={`text-xs font-semibold ${ positive ? "text-green-600" : "text-red-500"}`}>
+                            <span className={`text-xs font-semibold ${positive ? "text-green-600" : "text-red-500"}`}>
                                 {change}
                             </span>
                         </div>
@@ -104,17 +104,17 @@ const orders = [
     { id: "ORD003", customer: " Singh", status: "Cancelled", amount: 800, date: "2026-04-12" },
     { id: "ORD004", customer: "Amit Kumar", status: "Completed", amount: 3200, date: "2026-04-13" },
     { id: "ORD005", customer: "Neha ", status: "Pending", amount: 1500, date: "2026-04-14" },
-{ id: "ORD001", customer: "Akshat ", status: "Pending", amount: 1200, date: "2026-04-10" },
-{ id: "ORD002", customer: "Rahul ", status: "Completed", amount: 2500, date: "2026-04-11" },
-{ id: "ORD003", customer: "Priya ", status: "Cancelled", amount: 800, date: "2026-04-12" },
-{ id: "ORD004", customer: "Amit ", status: "Completed", amount: 3200, date: "2026-04-13" },
-{ id: "ORD005", customer: "Neha ", status: "Pending", amount: 1500, date: "2026-04-14" },
+    { id: "ORD001", customer: "Akshat ", status: "Pending", amount: 1200, date: "2026-04-10" },
+    { id: "ORD002", customer: "Rahul ", status: "Completed", amount: 2500, date: "2026-04-11" },
+    { id: "ORD003", customer: "Priya ", status: "Cancelled", amount: 800, date: "2026-04-12" },
+    { id: "ORD004", customer: "Amit ", status: "Completed", amount: 3200, date: "2026-04-13" },
+    { id: "ORD005", customer: "Neha ", status: "Pending", amount: 1500, date: "2026-04-14" },
 
-{ id: "ORD001", customer: "Yadav", status: "Pending", amount: 1200, date: "2026-04-10" },
-{ id: "ORD002", customer: "rma", status: "Completed", amount: 2500, date: "2026-04-11" },
-{ id: "ORD003", customer: "Singh", status: "Cancelled", amount: 800, date: "2026-04-12" },
-{ id: "ORD004", customer: "Kumar", status: "Completed", amount: 3200, date: "2026-04-13" },
-{ id: "ORD005", customer: "Gupta", status: "Pending", amount: 1500, date: "2026-04-14" },
+    { id: "ORD001", customer: "Yadav", status: "Pending", amount: 1200, date: "2026-04-10" },
+    { id: "ORD002", customer: "rma", status: "Completed", amount: 2500, date: "2026-04-11" },
+    { id: "ORD003", customer: "Singh", status: "Cancelled", amount: 800, date: "2026-04-12" },
+    { id: "ORD004", customer: "Kumar", status: "Completed", amount: 3200, date: "2026-04-13" },
+    { id: "ORD005", customer: "Gupta", status: "Pending", amount: 1500, date: "2026-04-14" },
 
 ];
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import {ShoppingBag, ShoppingCart, Users,MoreHorizontal, ArrowUpRight, ArrowDownRight, ChevronDown,
+import {
+    ShoppingBag, ShoppingCart, Users, MoreHorizontal, ArrowUpRight, ArrowDownRight, ChevronDown,
 } from 'lucide-react';
 import {
     LineChart,
@@ -12,13 +13,14 @@ import {
     Bar,
     Cell,
 } from 'recharts';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/UI/card';
-import { Progress } from '@/components/UI/progress';
-import {DropdownMenu,
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import {
+    DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
-} from '@/components/UI/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 
 
 const revenueData = [
@@ -98,9 +100,9 @@ function StatCard({ title, value, change, positive, icon: Icon, isSelected, onCl
                     <div className="flex flex-col items-end gap-0.5">
                         <div className="flex items-center gap-1">
                             {positive
-                                ? <ArrowUpRight className="h-3 w-3 : text-green-500 "/>
-                                : <ArrowDownRight className="h-3 w-3 text-red-500 "/>}
-                            <span className={`text-xs font-semibold ${ positive ? 'text-green-600' : 'text-red-500'}`}>{change}</span>
+                                ? <ArrowUpRight className="h-3 w-3 : text-green-500 " />
+                                : <ArrowDownRight className="h-3 w-3 text-red-500 " />}
+                            <span className={`text-xs font-semibold ${positive ? 'text-green-600' : 'text-red-500'}`}>{change}</span>
                         </div>
                         <span className={`text-xs ${isSelected ? 'text-orange-100' : 'text-gray-400'}`}>vs last week</span>
                     </div>
@@ -437,6 +439,7 @@ function TrafficSources() {
 
 const DashBoard = () => {
     const [selectedCard, setSelectedCard] = useState<number>(0);
+
     return (
         <div className="flex gap-4 h-full">
             {/* LEFT COLUMN */}
